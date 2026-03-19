@@ -8,14 +8,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Pathfinding Visualizer</title>
+    <title>BFS Funnel</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
     <!-- Splash screen -->
     <div id="splash-screen">
-        <p id="splash-title">Pathfinding Visualizer</p>
+        <p id="splash-title">BFS Funnel</p>
         <p id="splash-subtitle">BFS expands outward evenly. Funnel it to win.</p>
         <canvas id="splash-canvas" width="320" height="320"></canvas>
         <button id="start-button" class="primary hidden">Start</button>
@@ -30,7 +30,7 @@
             <span id="score-display">Total: 0 pts</span>
         </div>
 
-        <p id="phase-indicator">Click to place START node</p>
+        <p id="phase-indicator">Place walls to funnel BFS, then hit Find Path.</p>
 
         <canvas id="game-canvas" width="360" height="360"></canvas>
 
@@ -44,15 +44,15 @@
             <h3>How BFS Works</h3>
             <p class="help-intro">BFS (Breadth-First Search) expands outward evenly in all directions. It has no sense of where the goal is. Your job is to use your limited wall budget to funnel it so it reaches the end before flooding the board.</p>
             <ol>
-                <li>Each round has a <strong style="color:#22c55e">fixed START</strong> and <strong style="color:#ef4444">fixed END</strong> already placed for you.</li>
+                <li>Each round has a <strong class="colour-start">fixed START</strong> and <strong class="colour-end">fixed END</strong> already placed for you.</li>
                 <li>You have <strong>12 walls</strong> per round. Use them wisely. You cannot place more.</li>
                 <li>Tap any open cell to place a wall. Tap a wall to remove it (refunds the wall).</li>
                 <li>Press <strong>Find Path</strong> when ready to run BFS.</li>
-                <li><strong style="color:#fbbf24">Yellow</strong> = cells BFS explored. <strong style="color:#38bdf8">Blue</strong> = shortest path found.</li>
+                <li><strong class="colour-visited">Yellow</strong> = cells BFS explored. <strong class="colour-path">Blue</strong> = shortest path found.</li>
                 <li><strong>Scoring:</strong> score = (path length ÷ cells BFS explored) × 100. Path length is the lower bound: BFS must visit at least those cells. Your score is compared against the computer's greedy solver, which uses the same 12 walls to find the best placement it can.</li>
                 <li>BFS always finds the shortest path on an unweighted grid, but it explores widely unless you wall it in.</li>
             </ol>
-            <p class="help-tip">💡 Tip: place walls along the sides of the path, not across it. Blocking sideways spread is more efficient than blocking dead ends.</p>
+            <p class="help-tip">Tip: Place walls along the sides of the path, not across it. Blocking sideways spread is more efficient than blocking dead ends.</p>
         </div>
 
         <!-- Round result panel -->

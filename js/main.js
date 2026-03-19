@@ -1,6 +1,6 @@
 /* main.js
  * Author: Aleesha Abdullah
- * Description: Main game controller for Pathfinding Visualizer. Handles splash animation, game phases, BFS animation, wall budget system, scoring, localStorage history, and all DOM interactions.
+ * Description: Main game controller for BFS Funnel. Handles splash animation, game phases, BFS animation, wall budget system, scoring, localStorage history, and all DOM interactions.
  * Date: March 18, 2026 */
 
 window.addEventListener('load', () => {
@@ -9,7 +9,8 @@ window.addEventListener('load', () => {
     const ROWS        = 12;
     const COLS        = 12;
     const MAX_ROUNDS  = 5;
-    const STORAGE_KEY = 'pathfinder_best';
+    const STORAGE_KEY      = 'pathfinder_best';
+    const STORAGE_HISTORY = 'pathfinder_history';
 
     // Wall budget per round. On a 12×12 grid, Math.floor((ROWS + COLS) / 2) = 12 walls. Enough to meaningfully funnel BFS, but not enough to trivially wall the entire corridor. Players must choose placements carefully.
     const WALL_BUDGET = Math.floor((ROWS + COLS) / 2); // 12
@@ -351,7 +352,7 @@ window.addEventListener('load', () => {
         roundLabel.textContent = `Round ${round} / ${MAX_ROUNDS}`;
         updateScoreDisplay();
         updateWallDisplay();
-        setPhaseText(`Use up to ${WALL_BUDGET} walls to funnel BFS toward the end`);
+        setPhaseText(`Use up to ${WALL_BUDGET} walls to funnel BFS toward the end.`);
         drawGrid();
     }
 
@@ -610,7 +611,7 @@ window.addEventListener('load', () => {
 
     /**
      * Shows the end screen with total score, round history, and personal best.
-     * Updates the personal best in localStorage if the current total is higher.
+     * Saves round scores and personal best to localStorage for history across sessions.
      */
     function showEndScreen() {
         gameScreen.classList.add('hidden');
@@ -620,10 +621,15 @@ window.addEventListener('load', () => {
         const maxPossible = MAX_ROUNDS * 100;
         totalScoreEl.textContent = `${total} / ${maxPossible}`;
 
+        // Save this game's round scores to localStorage
+        localStorage.setItem(STORAGE_HISTORY, JSON.stringify(scores));
+
+        // Display round history (current game)
         roundHistoryEl.innerHTML = scores
             .map((s, i) => `Round ${i + 1}: <strong>${s} pts</strong>`)
             .join('<br>');
 
+        // Update personal best
         let best = parseInt(localStorage.getItem(STORAGE_KEY) || '0', 10);
         if (total > best) {
             best = total;
