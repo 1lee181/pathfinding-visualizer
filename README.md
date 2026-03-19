@@ -13,4 +13,4 @@ A browser-based puzzle game that teaches Breadth-First Search by making you comp
 
 ## Course
 
-COMPSCI 1XD3 - Computer Science Practice and Experience: Introduction to Software Design Using Web Programming, McMaster University
+COMPSCI 1XD3 - Introduction to Software Design Using Web Programming, McMaster University
